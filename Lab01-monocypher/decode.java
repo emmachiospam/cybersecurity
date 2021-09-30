@@ -28,7 +28,6 @@ public class decode{
     catch (FileNotFoundException e) {
       System.out.println("Sorry, file not found");
     }
-    toString(shift);
     return shift;
   }
 
@@ -66,7 +65,7 @@ public class decode{
           else {
             result = result + lower[i + shift];
           }
-          i = 26;
+          i = 27;
         }
         else if (test == upper[i]) {
           if(i + shift > 25) {
@@ -76,7 +75,10 @@ public class decode{
           else {
              result = result + upper[shift + i];
            }
-           i = 26;
+           i = 27;
+        }
+        if(i == 25) {
+          result = result + s.substring(j, j+1);
         }
       }
     }
