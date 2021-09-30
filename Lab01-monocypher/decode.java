@@ -5,40 +5,29 @@ public class decode{
 
   public static double[] distance(String s) throws FileNotFoundException {
     double[] shift = new double[26];
-    // try{
+    try{
       double[] english = frequency("alice");
       double[] encrypted = frequency(s);
-      // double[] english = {3,0,1};
-      // double[] encrypted = {5,2,0};
-      toString(english);
-      System.out.println("encrypted");
-      toString(encrypted);
+      for(int k = 0; k < 26; k++) {
+        english[k] = english[k]/english[26];
+        encrypted[k] = encrypted[k]/encrypted[26];
+      }
       for(int i = 0; i < 26; i++) {
-      // for(int i = 0; i < 3; i++) {
         double total = 0;
-        // System.out.println(i);
         for(int j = 0; j < 26; j++) {
-        // for(int j = 0; j < 3; j++) {
           int k = j + i;
           if(k > 25) {
             k = j + i - 26;
           }
-          // if(k > 2) {
-          //   k = j + i - 3;
-          // }
           double x = english[j] - encrypted[k];
-          // System.out.println(j +" " + k);
-          // System.out.println(english[i]);
-          // System.out.println(encrypted[k]);
-          // toString(english);
           total = total + (x * x);
         }
         shift[i] = Math.sqrt(total);
       }
-    // }
-    // catch (FileNotFoundException e) {
-    //   System.out.println("Sorry, file not found");
-    // }
+    }
+    catch (FileNotFoundException e) {
+      System.out.println("Sorry, file not found");
+    }
     toString(shift);
     return shift;
   }
@@ -58,20 +47,17 @@ public class decode{
         shiftAmount = i;
       }
     }
-    return shiftAmount+1;
+    return 26 - shiftAmount;
   }
 
-  public static String decode(int shift, String s) {
+  public static String simplify(int shift, String s) {
     char[] lower = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
     char[] upper = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     int length = s.length();
     String result = "";
-    shift = 1;
-    // System.out.println(s.charAt(0));
     for(int j = 0; j < length; j++) {
       char test = s.charAt(j);
       for(int i = 0; i < 26; i++) {
-        // System.out.println(test);
         if(test == lower[i]) {
           if(i + shift > 25) {
             int local = i + shift - 26;
@@ -92,10 +78,6 @@ public class decode{
            }
            i = 26;
         }
-        // else{
-        //    result = result + test;
-        //    i = 26;
-        // }
       }
     }
     return result;
@@ -111,12 +93,7 @@ public class decode{
       while(n.hasNext()) {
         line = n.nextLine();
         result = findFrequency(line, amount);
-        // findFrequency(line, amount);
       }
-      for(int i = 0; i < 26; i++) {
-        result[i] = result[i]/result[26];
-      }
-      // translate(result);
     }
     catch(FileNotFoundException e) {
       System.out.println("file not found");
@@ -146,20 +123,30 @@ public class decode{
     char[] lower = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
     for(int i = 0; i < 26; i++) {
       System.out.println(lower[i] + ": " + array[i]/array[26]);
-      // System.out.println(lower[i] + ": " + array[i]);
-      // System.out.println(array[26]);
     }
-    // System.out.println("total: " + array[26]);
+  }
+
+  public static String decode(String fileName) throws FileNotFoundException {
+    File s = new File(fileName);
+    int shift = smallest(distance(fileName));
+    String line;
+    String result = "";
+    try{
+      Scanner n = new Scanner(s);
+      while(n.hasNext()) {
+        line = n.nextLine();
+        result = simplify(shift, line);
+      }
+    }
+    catch(FileNotFoundException e) {
+      System.out.println("file not found");
+    }
+    return result;
   }
 
   public static void main(String args[]) throws FileNotFoundException {
     try{
-      int s = smallest(distance("testing"));
-      System.out.println(decode(6, "sgdoqhydenqvhmmhmfhrmdudqgzuhmfsnokzxzfzhmsgdmzfzhmsgzsbntkcadsgdoqhydenqknrhmfzrvdkkcdodmchmfnmsgdfzld"));
-      // System.out.println(s);
-      // distance("testing");
-      // System.out.println(smallest(distance("testing")));
-      // toString(distance("testing"));
+      System.out.println(decode(args[0]));
     }
     catch (FileNotFoundException e) {
 
