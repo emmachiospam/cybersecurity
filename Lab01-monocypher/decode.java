@@ -3,11 +3,11 @@ import java.io.*;
 
 public class decode{
 
-  public static double[] distance(String s) throws FileNotFoundException {
+  public static double[] distance(String crypted, String reference) throws FileNotFoundException {
     double[] shift = new double[26];
     try{
-      double[] english = frequency("alice");
-      double[] encrypted = frequency(s);
+      double[] english = frequency(reference);
+      double[] encrypted = frequency(crypted);
       for(int k = 0; k < 26; k++) {
         english[k] = english[k]/english[26];
         encrypted[k] = encrypted[k]/encrypted[26];
@@ -128,9 +128,9 @@ public class decode{
     }
   }
 
-  public static String decode(String fileName) throws FileNotFoundException {
+  public static String decode(String fileName, String reference) throws FileNotFoundException {
     File s = new File(fileName);
-    int shift = smallest(distance(fileName));
+    int shift = smallest(distance(fileName, reference));
     String line;
     String result = "";
     try{
@@ -147,11 +147,16 @@ public class decode{
   }
 
   public static void main(String args[]) throws FileNotFoundException {
-    try{
-      System.out.println(decode(args[0]));
+    if(args.length != 2) {
+      System.out.println("please input two arguments, the ciphered text first and then the reference text");
     }
-    catch (FileNotFoundException e) {
-
+    else {
+      try{
+        System.out.println(decode(args[0], args[1]));
+      }
+      catch (FileNotFoundException e) {
+        System.out.println("file not found");
+      }
     }
   }
 
