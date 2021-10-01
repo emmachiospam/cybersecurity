@@ -28,7 +28,7 @@ public static void translate(double[] array) {
     // System.out.println(lower[i] + ": " + array[i]);
     // System.out.println(array[26]);
   }
-  System.out.println("total: " + array[26]);
+  // System.out.println("total: " + array[26]);
 }
 
 public static double[] frequency (String fileName) throws FileNotFoundException {
@@ -52,11 +52,16 @@ public static double[] frequency (String fileName) throws FileNotFoundException 
 }
 
 public static void main(String[] args) throws FileNotFoundException {
-  try{
-    translate(frequency(args[0]));
+  if(args.length != 1) {
+    System.out.println("please input file name");
   }
-  catch (FileNotFoundException s){
-    System.out.println("file not found");
+  else {
+    try{
+      translate(frequency(args[0]));
+    }
+    catch (FileNotFoundException s){
+      System.out.println("file not found");
+    }
   }
 }
 
