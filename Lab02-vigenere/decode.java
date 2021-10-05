@@ -130,14 +130,14 @@ public class decode{
       System.out.println("please input two arguments, the file of text to decode and the file with the key");
     }
     else {
-    String decodeFile = args[0];
-    String keyFile = args[1];
-    try{
-      System.out.println(decodeFile(decodeFile, keyFile));
-    }
-    catch (FileNotFoundException e) {
-      System.out.println("file not found");
-    }
+      String decodeFile = args[0];
+      String keyFile = args[1];
+      try{
+        System.out.println(decodeFile(decodeFile, keyFile));
+      }
+      catch (FileNotFoundException e) {
+        System.out.println("file not found");
+      }
     }
   }
 
