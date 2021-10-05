@@ -38,7 +38,7 @@ public class decode{
   }
 
   public static int smallest(double[] shift) {
-    double smallestDistance = shift[1];
+    double smallestDistance = shift[0];
     int shiftAmount = 0;
     for(int i = 1; i < 26;i++) {
       if(shift[i] < smallestDistance) {
@@ -46,7 +46,7 @@ public class decode{
         shiftAmount = i;
       }
     }
-    return 26 - shiftAmount;
+    return Math.abs(26 - shiftAmount);
   }
 
   public static String simplify(int shift, String s) {
@@ -153,6 +153,7 @@ public class decode{
     else {
       try{
         System.out.println(decode(args[0], args[1]));
+        // System.out.println(smallest(distance("testing", "alice")));
       }
       catch (FileNotFoundException e) {
         System.out.println("file not found");
