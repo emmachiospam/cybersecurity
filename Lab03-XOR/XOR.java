@@ -3,7 +3,7 @@ import java.util.*;
 
 public class XOR{
 
-  public static String numberOutput(String key, String message) {
+  public static String numberOutput(String key, String message) throws FileNotFoundException {
     int kLength = key.length();
     int mLength = message.length();
     char[] keyChars = new char[kLength];
@@ -26,9 +26,35 @@ public class XOR{
     return result;
   }
 
-  public static void main(String args[]) {
-    // System.out.println((int)'A');
-    System.out.println(numberOutput("A", "hello"));
+  public static String numberOutputFile(String keyFileName, String messageFileName) throws FileNotFoundException {
+    File plainText = new File (messageFileName);
+    File keyText = new File (keyFileName);
+    String line;
+    String key = "";
+    String result = "";
+    try{
+      Scanner n = new Scanner(keyText);
+      key = n.nextLine();
+      Scanner s = new Scanner(plainText);
+      while(s.hasNext()) {
+        line = s.nextLine();
+        result = result + numberOutput(key, line);
+      }
+    }
+    catch (FileNotFoundException e) {
+      System.out.println("Sorry file not found");
+    }
+    return result;
+  }
+
+  public static void main(String args[]) throws FileNotFoundException {
+    String type = args[0];
+    String keyFile = args[1];
+    String messageFile = args[2];
+    if(type.equals("numOut")) {
+      System.out.println(numberOutputFile(keyFile, messageFile));
+    }
+    // System.out.println(numberOutput("A", "hello"));
   }
 
 }
