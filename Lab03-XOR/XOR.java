@@ -94,7 +94,7 @@ public class XOR{
       }
     }
     catch (IOException e) {
-      System.out.println("Sorry file not found");
+      System.out.println("sorry, there was an error");
     }
   }
 
