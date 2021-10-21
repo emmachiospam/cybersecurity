@@ -66,15 +66,6 @@ public class XOR{
     return xorList;
   }
 
-  // public static void humanOutput(String key, String message) {
-  //   try{
-  //   }
-  //   catch (IOException e) {
-  //     // e.printStrackTrace();
-  //     System.out.println("error");
-  //   }
-  // }
-
   public static void humanOutputFile(String keyFileName, String messageFileName) {
     File messageText = new File (messageFileName);
     File keyText = new File (keyFileName);
@@ -91,6 +82,8 @@ public class XOR{
         for(int i = 0; i < result.length; i++) {
           output.write(result[i]);
         }
+        // adds new line because decimal value 10 represents new line in ASCII
+        output.write(10);
       }
     }
     catch (IOException e) {
